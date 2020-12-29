@@ -1,0 +1,33 @@
+
+function register(data){
+    return dispatch =>{
+        dispatch(dispatchFunction({
+            type:authConstants.REGISTER_REQUEST_ACTION,
+            data:null
+        }))
+        authServices.register(data)
+        .then(
+            response =>{
+                if(response.token){
+                    dispatch(dispatchFunction({
+                        type:authConstants.REGISTER_SUCCESS_ACTION,
+                        data:response.data
+                    }))
+                } else {
+                    dispatch(dispatchFunction({
+                        type:authConstants.REGISTER_ERROR_ACTION,
+                        data:response
+                    }))
+                    alert.error(response.message)
+                }
+            },
+            error=>{
+                dispatch(dispatchFunction({
+                    type:authConstants.REGISTER_ERROR_ACTION,
+                    data:error.message
+                }))
+                alert.error(error.message)
+            }
+        )
+    }
+}
